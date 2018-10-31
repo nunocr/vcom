@@ -15,18 +15,18 @@ if input == 1:
     sp.call('clear', shell=True)
     videoCapture()
     image = videoCapture()
-    cv2.imshow("captured image", image)
+    #cv2.imshow("captured image", image)
 
 elif input == 2:
     sp.call('clear', shell=True)
     print("file name: ")
     input = raw_input()
     image = cv2.imread(input)
-    cv2.imshow("uploaded image", image)
+    #cv2.imshow("uploaded image", image)
 
 else:
      print("invalid option")
 
 cv2.imshow("image", image)
-cv2.waitKey(5000)
+#cv2.waitKey(5000)
 algorithm(image)

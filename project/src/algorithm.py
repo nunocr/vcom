@@ -1,38 +1,26 @@
 import cv2
 import numpy as np
+from matplotlib import pyplot as plt
 
 def algorithm(image):
 
-    # convert to grayscale
-
-    # image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-
-    # convert to hsv
-
-    # image = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
-
-    '''
-        image = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
-        image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-
-        kernel = np.ones((5,5), np.uint8)
-
-        # erode the shit out of it
-
-        erosion = cv2.erode(image, kernel, iterations = 1)
-        cv2.imshow("eroded", erosion)
-        cv2.waitKey(5000)
-
-        # dilate the shit out of it
-
-        dilation = cv2.dilate(image, kernel, iterations = 1)
-        cv2.imshow("dilated", image)
-        cv2.waitKey(5000)
-    '''
-
-    # image = cv2.pyrDown(image)
     image = cv2.GaussianBlur(image, (5, 5), 0)
     image = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
     image = cv2.GaussianBlur(image, (5, 5), 0)
-    cv2.imshow("pyrDown", image)
+
+    kernel = np.ones((3, 3), np.uint8)
+
+    lower_skin = np.array([0, 20, 70], dtype=np.uint8)
+    upper_skin = np.array([20, 255, 255], dtype=np.uint8)
+
+    image = cv2.inRange(image, lower_skin, upper_skin)
+
+    histogram = cv2.calcHist([image], [0], None, [256], [0, 256])
+    
+    plt.plot(histogram, color='b')
+    #plt.xlim([0, 256])
+
+    cv2.imshow("post processing image", image)
+    plt.show()
+    
     cv2.waitKey(5000)
